@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import { Container, Row, Col } from "reactstrap";
 import { useNavigate } from "react-router-dom";
+import { Col, Container, Row } from "reactstrap";
 import "./hero-section.css";
 
 import heroImg from "../../assets/images/hero.jpg";
@@ -15,16 +15,18 @@ const HeroSection = ({ currentUserId }) => {
       return;
     }
     // debugger;
-    // if (action == "explore") {
-    //   navigate("/explore");
-    // } else {
-    //   if (currentUserId) {
-    //     navigate("/create");
-    //   } else {
-    //     setLogin(true);
-    //   }
-    // }
-    setLogin("Sign in to create a donation 🙂");
+    if (action === "explore") {
+      navigate("/explore");
+      login && setLogin('')
+    } else {
+      if (currentUserId) {
+        navigate("/create");
+        login && setLogin('')
+      } else {
+        setLogin("Sign in to create a donation 🙂");
+      }
+    }
+    // setLogin("Sign in to create a donation 🙂");
   };
 
   return (
@@ -70,7 +72,7 @@ const HeroSection = ({ currentUserId }) => {
         </Row>
       </Container>
 
-      {login !== "" && <AuthModal  login={login} setShowModal={(val) => setLogin(val)} />}
+      {login !== "" && <AuthModal login={login} setShowModal={(val) => setLogin(val)} />}
     </section>
   );
 };

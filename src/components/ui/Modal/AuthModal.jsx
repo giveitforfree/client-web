@@ -1,12 +1,15 @@
 import React, { useState } from "react";
 import { Button } from "reactstrap";
 
-import "./modal.css";
+import "./modal.scss";
 
 const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
+  const [createAccount, setCreateAccount] = useState(false)
+
   const [credentials, setCredentials] = useState({
-    username: "",
-    password: "",
+    username: '',
+    password: '',
+    c_password: '',
   });
 
   const $onSubmitHandle = () => {
@@ -20,15 +23,15 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
   return (
     <div className="modal__wrapper">
       <div className="single__modal">
-        <div className="modal-header py-1">
+        <div className="modal-header">
           <span className="close__modal">
             <i className="ri-close-line" onClick={() => setShowModal("")}></i>
           </span>
           <h6 className="d-flex align-center justify-content-center text-light"> {login} </h6>
         </div>
 
-        <div className="form-inputs mt-5">
-          <div className="input__item my-4">
+        <div className="form-inputs mt-4">
+          <div className="input__item my-3">
             <input
               type="text"
               autoComplete="off"
@@ -40,7 +43,7 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
             />
           </div>
 
-          <div className="input__item my-4">
+          <div className="input__item my-3">
             <input
               type="password"
               autoComplete="off"
@@ -50,15 +53,26 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
               }
             />
           </div>
+
+          {createAccount && <div className="input__item my-3">
+            <input
+              type="password"
+              autoComplete="off"
+              placeholder="Confirm password"
+              onChange={(event) =>
+                onSetCredentials("c_password", event?.target?.value)
+              }
+            />
+          </div>}
         </div>
 
         <button onClick={() => $onSubmitHandle()} className="place__bid-btn">
-          Place a Bid
+          {createAccount ? "Sign Up" : 'Sign In'}
         </button>
 
         <div className="mt-4">
-          <p className="text-center">or sign in with:</p>
-          <div className=" d-flex gap-4 justify-content-center mt-3 signin-provider ">
+          <p className="text-center">Or {createAccount ? "sign up" : 'sign in'} with:</p>
+          <div className="d-flex justify-content-center gap-4 mt-3 signin-provider ">
             <Button size="sm">
               <i className="ri-facebook-circle-fill"></i>
             </Button>
@@ -76,9 +90,11 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
 
         <div className="mt-4">
           <h6 className="text-center text-light  ">
-            You don't have your donation account ?
+            {createAccount ? "already you have your donation account ?" : "You don't have your donation account ?"}
             <br />
-            <span className="mt-2 create__account">Create one </span>
+            <span className="mt-2 create__account"
+              onClick={() => setCreateAccount(val => !val)}
+              type="button"> {createAccount ? 'Sign in' : 'Create one'} </span>
           </h6>
         </div>
       </div>

@@ -1,6 +1,6 @@
 import React from "react";
+import { Col, Container, ListGroup, ListGroupItem, Row } from "reactstrap";
 
-import { Container, Row, Col, ListGroup, ListGroupItem } from "reactstrap";
 import "./footer.css";
 
 import { Link } from "react-router-dom";
@@ -148,13 +148,12 @@ const Footer = () => {
             </div>
           </Col>
 
-          <Col lg="12" className=" mt-4 text-center">
+          {/* <Col lg="12" className=" mt-4 text-center">
             <p className="copyright">
-              {" "}
               Copyrights 2022, Developed by Muhibur Rahman. @Muhib's Tech Diary
-              All Rights Reserved.{" "}
+              All Rights Reserved.
             </p>
-          </Col>
+          </Col> */}
         </Row>
       </Container>
     </footer>
