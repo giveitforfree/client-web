@@ -18,7 +18,7 @@ const NftCard = (props) => {
 
       <div className="nft__content">
         <h5 className="nft__title">
-          <Link to={`/market/${id}`}>{title}</Link>
+          <Link to={`/explore/${id}`}>{title}</Link>
         </h5>
 
         <div className="creator__info-wrapper d-flex gap-3">
@@ -44,7 +44,7 @@ const NftCard = (props) => {
             className="bid__btn d-flex align-items-center gap-1"
             onClick={() => setShowModal(true)}
           >
-            <i class="ri-shopping-bag-line"></i> Place Bid
+            <i className="ri-shopping-bag-line"></i> Place Bid
           </button>
 
           {showModal && <Modal setShowModal={setShowModal} />}

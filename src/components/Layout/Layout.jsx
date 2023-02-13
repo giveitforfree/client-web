@@ -2,17 +2,20 @@ import React from "react";
 import Routers from "../../routes/Routers";
 import Header from "../Header/Header";
 import Footer from "../Footer/Footer";
+import { connect } from "react-redux";
 
-const Layout = () => {
+const Layout = ({ currentUserId }) => {
   return (
     <div>
-      <Header />
-      <div>
-        <Routers />
-      </div>
-      <Footer />
+      <Header currentUserId={currentUserId} />
+      <Routers currentUserId={currentUserId} />
+      <Footer currentUserId={currentUserId} />
     </div>
   );
 };
 
-export default Layout;
+const mapStateToPops = (state) => ({
+  currentUserId: state?.auth?.id || null,
+});
+
+export default connect(mapStateToPops)(Layout);

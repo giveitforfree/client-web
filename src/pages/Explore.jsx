@@ -8,9 +8,9 @@ import { NFT__DATA } from "../assets/data/data";
 
 import { Container, Row, Col } from "reactstrap";
 
-import "../styles/market.css";
+import "../styles/explore.css";
 
-const Market = () => {
+const Explore = () => {
   const [data, setData] = useState(NFT__DATA);
 
   const handleCategory = () => {};
@@ -46,7 +46,7 @@ const Market = () => {
 
   return (
     <>
-      <CommonSection title={"MarketPlace"} />
+      <CommonSection title={"Explore"} />
 
       <section>
         <Container>
@@ -85,8 +85,8 @@ const Market = () => {
               </div>
             </Col>
 
-            {data?.map((item) => (
-              <Col lg="3" md="4" sm="6" className="mb-4" key={item.id}>
+            {data?.map((item, index ) => (
+              <Col lg="3" md="4" sm="6" className="mb-4" key={index}>
                 <NftCard item={item} />
               </Col>
             ))}
@@ -97,4 +97,4 @@ const Market = () => {
   );
 };
 
-export default Market;
+export default Explore;

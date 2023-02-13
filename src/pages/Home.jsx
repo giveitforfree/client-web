@@ -7,16 +7,13 @@ import SellerSection from "../components/ui/Seller-section/SellerSection";
 
 import Trending from "../components/ui/Trending-section/Trending";
 
-import StepSection from "../components/ui/Step-section/StepSection";
-
-const Home = () => {
+const Home = ({currentUserId}) => {
   return (
     <>
-      <HeroSection />
+      <HeroSection currentUserId={currentUserId} />
       <LiveAuction />
       <SellerSection />
       <Trending />
-      <StepSection />
     </>
   );
 };
