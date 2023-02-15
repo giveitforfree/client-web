@@ -12,8 +12,8 @@ const Home = ({currentUserId}) => {
     <>
       <HeroSection currentUserId={currentUserId} />
       <LiveAuction />
-      <SellerSection />
       <Trending />
+      <SellerSection />
     </>
   );
 };
