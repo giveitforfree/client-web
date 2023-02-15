@@ -1,2 +1,4 @@
 // AUTH ACTIONS
-export const USER_LOGIN = 'auth/USER_LOGIN'; 
+export const SET_LOGGED_USER = 'auth/SET_LOGGED_USER'; 
+export const SET_LOGGED_USER_FAILURE = 'auth/SET_LOGGED_USER_FAILURE'; 
+export const SET_LOGOUT_USER = 'auth/SET_LOGOUT_USER'; 

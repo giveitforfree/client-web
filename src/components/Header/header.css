@@ -47,6 +47,7 @@
   -webkit-text-stroke: 3px transparent;
   -webkit-text-fill-color: #14141f;
   margin-bottom: 0;
+  cursor: pointer;
 }
 
 .nav__right .btn {

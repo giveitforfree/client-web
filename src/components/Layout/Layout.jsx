@@ -15,7 +15,7 @@ const Layout = ({ currentUserId }) => {
 };
 
 const mapStateToPops = (state) => ({
-  currentUserId: state?.auth?.id || null,
+  currentUserId: state?.auth?.user?.id || null,
 });
 
 export default connect(mapStateToPops)(Layout);

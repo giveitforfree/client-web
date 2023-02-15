@@ -1,12 +1,14 @@
-import React, { useRef, useEffect } from "react";
+import React, { useEffect, useRef, } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import { Container } from "reactstrap";
-import { Link } from "react-router-dom";
 
 import "./header.css";
 
-const Header = ({ currentUserId }) => {
+const Header = () => {
   const headerRef = useRef(null);
   const menuRef = useRef(null);
+  const navigate = useNavigate()
+
 
   useEffect(() => {
     window.addEventListener("scroll", () => {
@@ -27,7 +29,7 @@ const Header = ({ currentUserId }) => {
     <header className="header" ref={headerRef}>
       <Container>
         <div className="navigation">
-          <div className="logo">
+          <div className="logo" onClick={() => navigate('/home')} >
             <h2 className=" d-flex gap-2 align-items-center ">
               <span>
                 <i className="ri-fire-fill"></i>
@@ -35,15 +37,20 @@ const Header = ({ currentUserId }) => {
               NFTs
             </h2>
           </div>
-          <div className="nav__right d-flex align-items-center gap-5 mt-3 ">
+          <div className="nav__right d-flex align-items-center gap-2 mt-3 ">
+
+            <button className="btn d-flex gap-2 align-items-center">
+              <span className="cursor-pointer">
+                <i className="ri-hand-heart-fill"></i>
+              </span>
+              <Link to="/create"> Donate </Link>
+            </button>
+
             <button className="btn d-flex gap-2 align-items-center">
               <span className="cursor-pointer">
                 <i className="ri-user-line"></i>
               </span>
-              <span
-                style={{ borderLeft: "1px solid white", height: "17px" }}
-              ></span>
-              <Link to="/wallet"> Donate something </Link>
+              <Link to="/profile"> mouad </Link>
             </button>
 
             <span className="mobile__menu">

@@ -1,20 +1,23 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
-import "./hero-section.css";
-
 import heroImg from "../../assets/images/hero.jpg";
+import { authAction } from "../../redux/actions/authAction";
+import "./hero-section.css";
 import AuthModal from "./Modal/AuthModal";
 
 const HeroSection = ({ currentUserId }) => {
-  const navigate = useNavigate();
   const [login, setLogin] = useState("");
+  const navigate = useNavigate();
+  const dispatch = useDispatch()
+
 
   const onBtnHeroHandle = (action) => {
     if (!action) {
       return;
     }
-    // debugger;
+
     if (action === "explore") {
       navigate("/explore");
       login && setLogin('')
@@ -28,6 +31,14 @@ const HeroSection = ({ currentUserId }) => {
     }
     // setLogin("Sign in to create a donation 🙂");
   };
+
+  const onHandleAuth = async credentials => {
+    const result = await dispatch(authAction(credentials))
+    if (result) {
+      navigate("/create");
+      login && setLogin('')
+    }
+  }
 
   return (
     <section className="hero__section">
@@ -57,8 +68,8 @@ const HeroSection = ({ currentUserId }) => {
                   onClick={() => onBtnHeroHandle("create")}
                   className="create__btn d-flex align-items-center gap-2"
                 >
-                  <i className="ri-ball-pen-line"></i>
-                  Donate Something
+                  <i className="ri-hand-heart-fill"></i>
+                  Donate
                 </button>
               </div>
             </div>
@@ -72,7 +83,7 @@ const HeroSection = ({ currentUserId }) => {
         </Row>
       </Container>
 
-      {login !== "" && <AuthModal login={login} setShowModal={(val) => setLogin(val)} />}
+      {login !== "" && <AuthModal login={login} setShowModal={(val) => setLogin(val)} onSubmit={(credentials) => onHandleAuth(credentials)} />}
     </section>
   );
 };

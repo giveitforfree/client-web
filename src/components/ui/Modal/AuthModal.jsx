@@ -1,10 +1,18 @@
+import { ProviderId } from "firebase/auth";
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import { Button } from "reactstrap";
+import { authAction } from "../../../redux/actions/authAction";
 
 import "./modal.scss";
 
 const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
   const [createAccount, setCreateAccount] = useState(false)
+  const [fieldErrors, setFieldErrors] = useState({})
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+
 
   const [credentials, setCredentials] = useState({
     username: '',
@@ -13,8 +21,44 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
   });
 
   const $onSubmitHandle = () => {
-    onSubmit && onSubmit({ ...credentials, signInProvider: "normal" });
+    let _fieldErrors = {};
+    if (createAccount) {
+      Object.keys(credentials).forEach(field => {
+        if (credentials[field] === '') {
+          _fieldErrors[field] = `${field} is required !`;
+        } else {
+          delete _fieldErrors[field]
+        }
+      });
+      if (credentials['c_password'] !== credentials['password']) {
+        _fieldErrors['match'] = `password is not match !`;
+      }
+    } else {
+      Object.keys(credentials).filter(el => !['c_password'].includes(el)).forEach(field => {
+        if (credentials[field] === '') {
+          _fieldErrors[field] = `${field} is required !`;
+        } else {
+          delete _fieldErrors[field]
+        }
+      });
+    }
+    if (Object.keys(_fieldErrors).length > 0) {
+      setFieldErrors(_fieldErrors);
+      return;
+    } else {
+      setFieldErrors({})
+    }
+
+    onSubmit && onSubmit({ ...credentials, isSignin: !createAccount, signInProvider: ProviderId.PASSWORD, });
   };
+
+  const onHandleAuthByProvider = async provider => {
+    const result = await dispatch(authAction({ isSignin: !createAccount, signInProvider: provider }))
+    if (result) {
+      setShowModal('')
+      navigate('/create')
+    }
+  }
 
   const onSetCredentials = (fieldName, value = "") => {
     setCredentials({ ...credentials, [fieldName]: value });
@@ -41,6 +85,10 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
                 onSetCredentials("username", event?.target?.value)
               }
             />
+            {fieldErrors['username'] &&
+              <span className="text-danger">
+                {fieldErrors['username']}
+              </span>}
           </div>
 
           <div className="input__item my-3">
@@ -52,6 +100,10 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
                 onSetCredentials("password", event?.target?.value)
               }
             />
+            {fieldErrors['password'] &&
+              <span className="text-danger">
+                {fieldErrors['password']}
+              </span>}
           </div>
 
           {createAccount && <div className="input__item my-3">
@@ -63,6 +115,14 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
                 onSetCredentials("c_password", event?.target?.value)
               }
             />
+            {fieldErrors['c_password'] &&
+              <span className="text-danger">
+                {fieldErrors['c_password']}
+              </span>}
+            {fieldErrors['match'] &&
+              <span className="text-danger">
+                {fieldErrors['match']}
+              </span>}
           </div>}
         </div>
 
@@ -73,18 +133,18 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
         <div className="mt-4">
           <p className="text-center">Or {createAccount ? "sign up" : 'sign in'} with:</p>
           <div className="d-flex justify-content-center gap-4 mt-3 signin-provider ">
-            <Button size="sm">
+            {/* <Button size="sm" onClick={() => onHandleAuthByProvider(ProviderId.FACEBOOK)}>
               <i className="ri-facebook-circle-fill"></i>
-            </Button>
-            <Button size="sm">
+            </Button> */}
+            <Button size="sm" onClick={() => onHandleAuthByProvider(ProviderId.GOOGLE)}>
               <i className="ri-google-fill"></i>
             </Button>
-            <Button size="sm">
+            {/* <Button size="sm" onClick={() => onHandleAuthByProvider(ProviderId.TWITTER)}>
               <i className="ri-twitter-fill"></i>
             </Button>
             <Button size="sm">
               <i className="ri-github-fill"></i>
-            </Button>
+            </Button> */}
           </div>
         </div>
 
