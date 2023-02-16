@@ -33,7 +33,7 @@
   outline: none;
   padding: 7px 25px !important;
   border-radius: 50px !important;
-  border: 1px solid #5142fc !important;
+  border: 1px solid var(--ui-colors-donation)  !important;
   font-size: 0.9rem;
   background: transparent;
 }
@@ -49,7 +49,7 @@
 }
 
 .hero__btns button:hover {
-  background: #5142fc;
+  background: var(--ui-colors-donation) ;
 }
 
 .hero__img {
