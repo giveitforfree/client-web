@@ -7,6 +7,11 @@ import App from "./App";
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
 
+import Amplify from 'aws-amplify';
+import awsConfig from './aws-exports';
+
+Amplify.configure( awsConfig )
+
 ReactDOM.render(
   <React.StrictMode>
     <Provider store={store}>
@@ -17,3 +22,5 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 );
+
+// https://goo.gl/maps/NatXsdSJRXMHN1DG77

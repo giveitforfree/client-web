@@ -1,4 +1,3 @@
-import { ProviderId } from "firebase/auth";
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -49,8 +48,7 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
       setFieldErrors({})
     }
 
-    onSubmit && onSubmit({ ...credentials, isSignin: !createAccount, signInProvider: ProviderId.PASSWORD, });
-  };
+   };
 
   const onHandleAuthByProvider = async provider => {
     const result = await dispatch(authAction({ isSignin: !createAccount, signInProvider: provider }))
@@ -136,7 +134,7 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
             {/* <Button size="sm" onClick={() => onHandleAuthByProvider(ProviderId.FACEBOOK)}>
               <i className="ri-facebook-circle-fill"></i>
             </Button> */}
-            <Button size="sm" onClick={() => onHandleAuthByProvider(ProviderId.GOOGLE)}>
+            <Button size="sm" onClick={() => onHandleAuthByProvider('GOOGLE')}>
               <i className="ri-google-fill"></i>
             </Button>
             {/* <Button size="sm" onClick={() => onHandleAuthByProvider(ProviderId.TWITTER)}>
