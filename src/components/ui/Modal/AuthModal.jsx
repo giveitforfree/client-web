@@ -1,8 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { Button } from "reactstrap";
-import { authAction } from "../../../redux/actions/authAction";
 
 import "./modal.scss";
 
@@ -13,50 +11,42 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
   const navigate = useNavigate()
 
 
-  const [credentials, setCredentials] = useState({
-    username: '',
-    password: '',
-    c_password: '',
-  });
+  const [credentials, setCredentials] = useState({ name: 'm.iken', email: 'iken.mouad.contact@gmail.com', telephone: '0620371806', password: 'password', c_password: '', });
 
   const $onSubmitHandle = () => {
-    let _fieldErrors = {};
-    if (createAccount) {
-      Object.keys(credentials).forEach(field => {
-        if (credentials[field] === '') {
-          _fieldErrors[field] = `${field} is required !`;
-        } else {
-          delete _fieldErrors[field]
-        }
-      });
-      if (credentials['c_password'] !== credentials['password']) {
-        _fieldErrors['match'] = `password is not match !`;
-      }
-    } else {
-      Object.keys(credentials).filter(el => !['c_password'].includes(el)).forEach(field => {
-        if (credentials[field] === '') {
-          _fieldErrors[field] = `${field} is required !`;
-        } else {
-          delete _fieldErrors[field]
-        }
-      });
-    }
-    if (Object.keys(_fieldErrors).length > 0) {
-      setFieldErrors(_fieldErrors);
-      return;
-    } else {
-      setFieldErrors({})
-    }
+    // VALIDATION FIELDS
+    // let _fieldErrors = {};
+    // if (createAccount) {
+    //   Object.keys(credentials).forEach(field => {
+    //     if (credentials[field] === '') {
+    //       _fieldErrors[field] = `${field} is required !`;
+    //     } else {
+    //       delete _fieldErrors[field]
+    //     }
+    //   });
+    //   if (credentials['c_password'] !== credentials['password']) {
+    //     _fieldErrors['match'] = `password is not match !`;
+    //   }
+    // } else {
+    //   Object.keys(credentials).filter(el => !['c_password', 'telephone', 'email'].includes(el)).forEach(field => {
+    //     if (credentials[field] === '') {
+    //       _fieldErrors[field] = `${field} is required !`;
+    //     } else {
+    //       delete _fieldErrors[field]
+    //     }
+    //   });
+    // }
+    // if (Object.keys(_fieldErrors).length > 0) {
+    //   setFieldErrors(_fieldErrors);
+    //   return;
+    // } else {
+    //   setFieldErrors({})
+    // }
 
-   };
+    // CALL API
+    onSubmit({ ...credentials, createAccount })
+  };
 
-  const onHandleAuthByProvider = async provider => {
-    const result = await dispatch(authAction({ isSignin: !createAccount, signInProvider: provider }))
-    if (result) {
-      setShowModal('')
-      navigate('/create')
-    }
-  }
 
   const onSetCredentials = (fieldName, value = "") => {
     setCredentials({ ...credentials, [fieldName]: value });
@@ -78,14 +68,46 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
               type="text"
               autoComplete="off"
               autoFocus={true}
-              placeholder="Enter username"
+              placeholder="Enter name"
               onChange={(event) =>
-                onSetCredentials("username", event?.target?.value)
+                onSetCredentials("name", event?.target?.value)
               }
             />
-            {fieldErrors['username'] &&
+            {fieldErrors['name'] &&
               <span className="text-danger">
-                {fieldErrors['username']}
+                {fieldErrors['name']}
+              </span>}
+          </div>
+
+          <div className="input__item my-3">
+            <input
+              type="email"
+              autoComplete="off"
+              autoFocus={true}
+              placeholder="Enter email"
+              onChange={(event) =>
+                onSetCredentials("email", event?.target?.value)
+              }
+            />
+            {fieldErrors['email'] &&
+              <span className="text-danger">
+                {fieldErrors['email']}
+              </span>}
+          </div>
+
+          <div className="input__item my-3">
+            <input
+              type="tel"
+              autoComplete="off"
+              autoFocus={true}
+              placeholder="Enter telephone"
+              onChange={(event) =>
+                onSetCredentials("telephone", event?.target?.value)
+              }
+            />
+            {fieldErrors['telephone'] &&
+              <span className="text-danger">
+                {fieldErrors['telephone']}
               </span>}
           </div>
 
@@ -127,24 +149,6 @@ const AuthModal = ({ setShowModal, login = "", onSubmit }) => {
         <button onClick={() => $onSubmitHandle()} className="place__bid-btn">
           {createAccount ? "Sign Up" : 'Sign In'}
         </button>
-
-        <div className="mt-4">
-          <p className="text-center">Or {createAccount ? "sign up" : 'sign in'} with:</p>
-          <div className="d-flex justify-content-center gap-4 mt-3 signin-provider ">
-            {/* <Button size="sm" onClick={() => onHandleAuthByProvider(ProviderId.FACEBOOK)}>
-              <i className="ri-facebook-circle-fill"></i>
-            </Button> */}
-            <Button size="sm" onClick={() => onHandleAuthByProvider('GOOGLE')}>
-              <i className="ri-google-fill"></i>
-            </Button>
-            {/* <Button size="sm" onClick={() => onHandleAuthByProvider(ProviderId.TWITTER)}>
-              <i className="ri-twitter-fill"></i>
-            </Button>
-            <Button size="sm">
-              <i className="ri-github-fill"></i>
-            </Button> */}
-          </div>
-        </div>
 
         <div className="mt-4">
           <h6 className="text-center text-light  ">

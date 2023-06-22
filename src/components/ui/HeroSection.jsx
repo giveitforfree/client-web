@@ -32,12 +32,13 @@ const HeroSection = ({ currentUserId }) => {
     // setLogin("Sign in to create a donation 🙂");
   };
 
-  const onHandleAuth = async credentials => {
-    const result = await dispatch(authAction(credentials))
-    if (result) {
-      navigate("/create");
-      login && setLogin('')
-    }
+  const onHandleAuth =   credentials => {
+      dispatch(authAction(credentials)).then(response=> {
+        if( response.token ) {
+            navigate("/create");
+            login && setLogin('')
+        }
+      })
   }
 
   return (

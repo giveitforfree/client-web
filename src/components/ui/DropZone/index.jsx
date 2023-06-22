@@ -77,19 +77,21 @@ export default DropZone;
 const thumbsContainer = {
   display: 'flex',
   flexDirection: 'column',
-  alignItems: 'center'
+  alignItems: 'center',
+  overflowY:'auto',
+  maxHeight: '20rem'
 };
 
 const thumb = {
   display: "inline-flex",
   borderRadius: 2,
   border: "var(--border)",
-  marginBottom: 8,
-  marginRight: 8,
-  marginLeft: 8,
-  width: 60,
-  height: 60,
-  padding: 4,
+  // marginBottom: 8,
+  // marginRight: 8,
+  // marginLeft: 8,
+  // width: 60,
+  // height: 60,
+  // padding: 4,
   boxSizing: "border-box",
   background: "var(--primary)",
 };
@@ -102,7 +104,7 @@ const thumbInner = {
 
 const img = {
   display: "block",
-  width: "auto",
+  width: "260px",
   height: "100%",
 };
 
