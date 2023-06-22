@@ -2,7 +2,8 @@ import { useEffect } from "react";
 import { connect, useDispatch } from "react-redux";
 import "./app.css";
 import Layout from "./components/Layout/Layout";
-import { SET_LOGGED_USER } from "./redux/actions/types";
+import { LOGIN_SUCCESS } from "./redux/actions/types";
+import { getCurrentUser } from "./redux/actions/authAction";
 
 function App(props) {
   const { currentUser } = props
@@ -10,10 +11,9 @@ function App(props) {
 
   useEffect(() => {
     if (!currentUser) {
-      let user = JSON.parse(localStorage.getItem('user'));
-      const token = JSON.parse(localStorage.getItem('token'))
-      user = { ...user, token }
-      dispatch({ type: SET_LOGGED_USER, payload: user })
+      const token = localStorage.getItem('token');
+      const user = dispatch(getCurrentUser(token))
+      dispatch({ type: LOGIN_SUCCESS, payload: user })
     }
   }, [currentUser])
 

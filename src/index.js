@@ -1,19 +1,22 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import { BrowserRouter as Router } from "react-router-dom";
 import store from "./redux/store";
 import { Provider } from "react-redux";
 import App from "./App";
 import "bootstrap/dist/css/bootstrap.css";
 import "remixicon/fonts/remixicon.css";
+import { createRoot } from "react-dom/client";
 
-ReactDOM.render(
+
+const rootElement = document.getElementById("root");
+const root = createRoot(rootElement);
+
+root.render( 
   <React.StrictMode>
     <Provider store={store}>
       <Router  >
         <App />
       </Router>
     </Provider>
-  </React.StrictMode>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
